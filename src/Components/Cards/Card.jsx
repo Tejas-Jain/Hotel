@@ -1,26 +1,27 @@
 import styled from "styled-components"
-
 export default function Card({ imgSrc, title, description, price, review }) {
-    <Wrapper>
-        <Image src={imgSrc}></Image>
-        <Title>{title}</Title>
-        <Description>{description}</Description>
-        <Price>Starting from ${price}</Price>
-        <Review>{review}</Review>
-    </Wrapper>
+    return (
+        <Wrapper>
+            <Image src={'../../assets/Location Images/'+imgSrc}></Image>
+            <Title>{title}</Title>
+            <Description>{description}</Description>
+            <Price>Starting from ${price}</Price>
+            <Review>{review}</Review>
+        </Wrapper>
+    );
 }
 
 
 const Wrapper = styled.div`
-/* Auto layout */
+    /* Auto layout */
 
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-padding: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
 
-width: 226px;
-height: 348px;
+    width: 226px;
+    height: 348px;
 `
 
 

@@ -10,7 +10,6 @@ const Wrapper = styled.div`
     align-items: center;
     padding: 8px 7px;
 
-    min-width: 0;
     width: 350px;
     height: 30px;
 
@@ -20,7 +19,6 @@ const Wrapper = styled.div`
 const InnerText = styled.div`
 /* Find the Search Text */
 
-    min-width: 0;
     width: 108px;
     height: 12px;
 
