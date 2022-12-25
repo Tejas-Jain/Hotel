@@ -1,5 +1,14 @@
 import styled from 'styled-components'
 
+export default function HeaderDescript({heading, description, color, align}){
+    return(
+        <Wrapper align={align}>
+            <Heading color={color}>{heading}</Heading>
+            <Description color={color}>{description}</Description>
+        </Wrapper>
+    )
+}
+
 const Wrapper = styled.div`
     /* Auto layout */
 
@@ -18,7 +27,7 @@ const Wrapper = styled.div`
     }};
     
     padding: 0px;
-
+    align-self: stretch;
     min-width:0;
     min-height=0;
 `;
@@ -32,7 +41,7 @@ const Heading = styled.div`
     font-size: 40px;
     line-height: 48px;
 
-    color: ${({theme})=>theme};
+    color: ${({color})=>color};
 `
 const Description = styled.div`
     min-height: 24px;
@@ -44,14 +53,5 @@ const Description = styled.div`
     line-height: 24px;
     display: flex;
     align-items: flex-end;
-    color: ${ ({ theme })=>theme };
+    color: ${ ({ color })=>color };
 `;
-
-export default function HeaderDescript({heading, description, theme, align}){
-    return(
-        <Wrapper align={align}>
-            <Heading theme={theme}>{heading}</Heading>
-            <Description theme={theme}>{description}</Description>
-        </Wrapper>
-    )
-}

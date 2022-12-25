@@ -1,8 +1,15 @@
 import styled from "styled-components"
 
+export default function SearchBox({content}){
+    return (
+        <Wrapper>
+            <InnerText>{content}</InnerText>
+        </Wrapper>
+    );
+}
+
 const Wrapper = styled.div`
     box-sizing: border-box;
-
     /* Auto layout */
 
     display: flex;
@@ -30,10 +37,3 @@ const InnerText = styled.div`
 
     color: rgba(0, 0, 0, 0.7);
 `;
-export default function SearchBox({content}){
-    return (
-        <Wrapper>
-            <InnerText>{content}</InnerText>
-        </Wrapper>
-    );
-}

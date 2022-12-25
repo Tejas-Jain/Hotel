@@ -1,13 +1,15 @@
 import styled from "styled-components"
+import CityImages from '../../../public/Location Images/CityImages'
 export default function Card({ imgSrc, title, description, price, review }) {
     return (
         <Wrapper>
-            <Image src={'../../assets/Location Images/'+imgSrc}></Image>
+            <Image src={imgSrc}></Image>
             <Title>{title}</Title>
             <Description>{description}</Description>
-            <Price>Starting from ${price}</Price>
+            <Price price={price}>Starting from {price}</Price>
             <Review>{review}</Review>
         </Wrapper>
+        
     );
 }
 
@@ -17,35 +19,38 @@ const Wrapper = styled.div`
 
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: flex-start;
     padding: 0px;
 
     width: 226px;
-    height: 348px;
+    align-self: stretch;
 `
 
 
 const Image = styled.img`
-    width: 226px;
+    border-radius: 7%;
     height: 206px;
     background: url(${({src})=> src});
 `
 const Title = styled.div`
-    width: 208px;
-    height: 66px;
 
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 27px;
-    line-height: 33px;
 
-    color: #000000;
+font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 27px;
+line-height: 33px;
+/* identical to box height */
+
+
+color: #000000;
+
+align-self: stretch;
 
 `
 const Description = styled.div`
-width: 60px;
-height: 24px;
+
 
 font-family: 'Inter';
 font-style: normal;
@@ -56,22 +61,20 @@ line-height: 24px;
 color: #171616;
 `
 const Price = styled.div`
-width: 151px;
-height: 24px;
 
-font-family: 'Inter';
-font-style: normal;
-font-weight: 700;
-font-size: 20px;
-line-height: 24px;
 
-color: #000000;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    display: ${args=>!args.price? 'none': 'auto'};
+    color: #000000;
 
 `
 
 const Review = styled.div`
-width: 169px;
-height: 18px;
+
 
 font-family: 'Inter';
 font-style: normal;

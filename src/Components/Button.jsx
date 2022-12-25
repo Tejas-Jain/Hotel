@@ -10,20 +10,20 @@ const Wrapper = styled.div`
     padding: 3px 22px;
     gap: 10px;
 
-    width: 96px;
-    min-height: 0;
+    // width: 96px;
 
     background: ${props=>props.type==='dark'?'#032350': '#FFFFFF'};
 
     border-radius: 6px;
     align-self: stretch;
+    cursor: pointer;
 `;
 const InnerText = styled.div`
 /* Button */
 
 
-    width: 61px;
-    height: 19px;
+    // width: 61px;
+    // height: 19px;
 
     font-family: 'Inter';
     font-style: normal;
