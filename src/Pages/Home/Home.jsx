@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import './Header.css'
 import Button from '../../Components/Button'
 import SearchBox from '../../Components/SearchBox'
@@ -6,6 +7,13 @@ import HeadingDescript from '../../Components/HeadingDescrip'
 import Card2 from '../../Components/Cards/Card2'
 import Card from '../../Components/Cards/Card'
 import './Body.css'
+
+//For Date Range
+import { DateRange } from 'react-date-range';
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+
+
 export default function Home(){
     return (
     <>  
@@ -17,16 +25,15 @@ export default function Home(){
     )
 }
 
-function Body(){
-    return (
-        <div className="frame10">
-            <Section1 />
-            <Section2 />
-        </div>
-    )
-}
-
 function Header(){
+    const [state, setState] = useState([
+        {
+        startDate: new Date(),
+        endDate: new Date(),
+        key: 'selection'
+        }
+    ]);
+
     return (
         <div className="frame2">
             <div className="frame5">
@@ -49,13 +56,32 @@ function Header(){
             </div>
             <div className="frame7">
                 <SearchBox content='Where you are going?' />
-                <SearchBox content='Dates' />
+                <div style={{'z-axis: 100'}}>
+                    <SearchBox content='Dates' />
+                    <DateRange
+                        editableDateInputs={true}
+                        onChange={item => setState([item.selection])}
+                        moveRangeOnFirstSelection={false}
+                        ranges={state}
+                    />
+                </div>
                 <SearchBox content='People' />
                 <Button content='Search' type='dark' />
             </div>
         </div>
     );
 }
+
+
+function Body(){
+    return (
+        <div className="frame10">
+            <Section1 />
+            <Section2 />
+        </div>
+    )
+}
+
 
 function Section1(){
     return(
