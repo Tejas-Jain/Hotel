@@ -1,5 +1,8 @@
+import { Navigation } from "../Home/Home"
 export default function List(){
     return <>
-        List
+    <div className="frame2">
+        <Navigation />
+    </div>
     </>
 }

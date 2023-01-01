@@ -12,6 +12,11 @@ import './Body.css'
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
+import {format} from 'date-fns'
+
+
+//Options Component
+import OptionMenu from '../../Components/OptionMenu'
 
 
 export default function Home(){
@@ -25,8 +30,10 @@ export default function Home(){
     )
 }
 
+
 function Header(){
-    const [state, setState] = useState([
+    const [openDate, setOpenDate] = useState(false);
+    const [date, setDate] = useState([
         {
         startDate: new Date(),
         endDate: new Date(),
@@ -34,21 +41,25 @@ function Header(){
         }
     ]);
 
+    const [openOption, setOpenOption] = useState(false);
+    const [option, setOption] = useState({
+        adult: 1,
+        child: 0,
+        room: 1,
+    })
+    
+    const handle = (name, operation)=>{
+        setOption(prev=>{ 
+            return{
+                ...prev,
+                [name]: operation==='i' ? option[name]+1 : Math.max(option[name]-1, 0),
+            }
+        })
+    }
     return (
         <div className="frame2">
-            <div className="frame5">
-                <div className="Booking">Booking.com</div>
-                <div className="frame4">
-                    <Button content='Sign In' />
-                    <Button content='Register' />
-                </div>
-            </div>
 
-            <div className="frame6">
-                <ModeButton content='Stay' />
-                <ModeButton content='Travel' state='active' />
-                <ModeButton content='Taxi' />
-            </div>
+            <Navigation />
 
             <div className="frame8">
                 <div className="Find">Find Your Next Stay</div>
@@ -56,20 +67,45 @@ function Header(){
             </div>
             <div className="frame7">
                 <SearchBox content='Where you are going?' />
-                <div style={{'z-axis: 100'}}>
-                    <SearchBox content='Dates' />
-                    <DateRange
+                <div >
+                    <SearchBox onClick={()=>setOpenDate(!openDate)} content={format(date[0].startDate, "dd/MM/yyyy")+" to "+format(date[0].endDate, "dd/MM/yyyy")} />
+                    {openDate && <DateRange
+                        className='Date'
                         editableDateInputs={true}
-                        onChange={item => setState([item.selection])}
+                        onChange={item => setDate([item.selection])}
                         moveRangeOnFirstSelection={false}
-                        ranges={state}
-                    />
+                        ranges={date}
+                    />}
                 </div>
-                <SearchBox content='People' />
+                <div>
+                    <SearchBox onClick={()=>setOpenOption(!openOption)} content={option.adult+" Adults "+option.child+" Child "+option.room+" Rooms "} />
+                    {openOption && <OptionMenu 
+                        handle={handle}
+                        option={option}
+                    />}
+                </div>
                 <Button content='Search' type='dark' />
             </div>
         </div>
     );
+}
+
+export function Navigation(){
+    return (<>
+        <div className="frame5">
+            Booking.com
+            <div className="frame4">
+                <Button content='Sign In' />
+                <Button content='Register' />
+            </div>
+        </div>
+
+        <div className="frame6">
+            <ModeButton content='Stay' />
+            <ModeButton content='Travel' state='active' />
+            <ModeButton content='Taxi' />
+        </div>    
+    </>)
 }
 
 
@@ -81,6 +117,7 @@ function Body(){
         </div>
     )
 }
+
 
 
 function Section1(){
@@ -126,6 +163,8 @@ function Section2(){
     </>
     )
 }
+
+
 
 function Footer(){
     return (

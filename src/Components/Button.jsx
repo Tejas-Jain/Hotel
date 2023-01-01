@@ -9,11 +9,10 @@ const Wrapper = styled.div`
     align-items: center;
     padding: 3px 22px;
     gap: 10px;
-
     // width: 96px;
 
     background: ${props=>props.type==='dark'?'#032350': '#FFFFFF'};
-
+    flex-shrink: 0;
     border-radius: 6px;
     align-self: stretch;
     cursor: pointer;

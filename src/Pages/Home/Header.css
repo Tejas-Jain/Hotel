@@ -1,14 +1,12 @@
 .frame2{
 /* Auto layout */
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     padding: 31px 143px 21px 74px;
-    gap: 10px;
+    gap: 20px;
 
-    height: 378px;
     min-height: 0;
 
     background: #003580;
@@ -27,12 +25,6 @@
 
     min-height: 58px;
 
-
-    /* Inside auto layout */
-
-    align-self: stretch;
-}
-.Booking{
     min-width: 323px;
     min-height: 58px;
 
@@ -41,11 +33,11 @@
     font-weight: 800;
     font-size: 48px;
     line-height: 58px;
-    /* identical to box height */
-
-
     color: #FFFFFF;
 
+    /* Inside auto layout */
+
+    align-self: stretch;
 }
 .frame4{
 /* Auto layout */
@@ -123,14 +115,18 @@ width: 548px;
 
 }
 .frame7{
-display: flex;
+    display: flex;
     flex-direction: row;
     align-items: flex-start;
     padding: 0px;
 
     min-width: 0;
-    height: 30px;
+    /* height: 30px; */
 
 
     align-self: stretch;
+}
+.Date{
+    position: absolute;
+    z-index: 100;
 }

@@ -1,9 +1,9 @@
 import styled from "styled-components"
 
-export default function SearchBox({content}){
+export default function SearchBox({onClick, content}){
     return (
-        <Wrapper>
-            <InnerText>{content}</InnerText>
+        <Wrapper onClick={onClick}>
+            <InputBox placeholder={content}/>
         </Wrapper>
     );
 }
@@ -15,25 +15,24 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 8px 7px;
 
     width: 350px;
-    height: 30px;
+    height: 40px;
 
     background: #FFFFFF;
     border: 3px solid #FAFF06;
 `;
-const InnerText = styled.div`
+const InputBox = styled.input`
 /* Find the Search Text */
-
-    width: 108px;
-    height: 12px;
-
+    width: 100%;
+    height: 100%;
+    
+    border: 0;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 800;
-    font-size: 10px;
+    font-size: 15px;
     line-height: 12px;
 
-    color: rgba(0, 0, 0, 0.7);
+    // color: rgba(0, 0, 0, 0.7);
 `;
