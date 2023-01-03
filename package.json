@@ -1,0 +1,18 @@
+{
+  "name": "hotel",
+  "version": "1.0.0",
+  "description": "Backend for Hotel Project",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon --no-deprecation index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.8.2",
+    "suppress-warnings": "^1.0.2"
+  }
+}
