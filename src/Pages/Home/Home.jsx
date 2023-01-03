@@ -8,12 +8,13 @@ import Card2 from '../../Components/Cards/Card2'
 import Card from '../../Components/Cards/Card'
 import './Body.css'
 
+import { useNavigate } from 'react-router-dom'
+
 //For Date Range
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import {format} from 'date-fns'
-
 
 //Options Component
 import OptionMenu from '../../Components/OptionMenu'
@@ -32,6 +33,11 @@ export default function Home(){
 
 
 function Header(){
+
+    const navigate = useNavigate();
+
+    const [destination, setDestionation] = useState('');
+
     const [openDate, setOpenDate] = useState(false);
     const [date, setDate] = useState([
         {
@@ -56,6 +62,11 @@ function Header(){
             }
         })
     }
+
+    function handleSearch(){
+        navigate('/hotels', { state: {destination, date, option}});
+    }
+
     return (
         <div className="frame2">
 
@@ -66,7 +77,10 @@ function Header(){
                 <div className="Search">Search for Hotels, Stays, Travels and More...</div>
             </div>
             <div className="frame7">
-                <SearchBox content='Where you are going?' />
+                <SearchBox 
+                    content='Where you are going?' 
+                    onChange={e=>setDestionation(e.target.value)}
+                />
                 <div >
                     <SearchBox onClick={()=>setOpenDate(!openDate)} content={format(date[0].startDate, "dd/MM/yyyy")+" to "+format(date[0].endDate, "dd/MM/yyyy")} />
                     {openDate && <DateRange
@@ -84,7 +98,7 @@ function Header(){
                         option={option}
                     />}
                 </div>
-                <Button content='Search' type='dark' />
+                <Button content='Search' type='dark' onClick={()=>handleSearch()} />
             </div>
         </div>
     );

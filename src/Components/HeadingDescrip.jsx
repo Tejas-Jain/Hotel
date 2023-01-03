@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
-export default function HeaderDescript({heading, description, color, align}){
+export default function HeaderDescript({heading, description, color, align, headingFontSize='40px', descriptionFontSize='20'}){
     return(
         <Wrapper align={align}>
-            <Heading color={color}>{heading}</Heading>
-            <Description color={color}>{description}</Description>
+            <Heading color={color} fontSize={headingFontSize}>{heading}</Heading>
+            <Description color={color} fontSize={descriptionFontSize}>{description}</Description>
         </Wrapper>
     )
 }
@@ -28,17 +28,17 @@ const Wrapper = styled.div`
     
     padding: 0px;
     align-self: stretch;
-    min-width:0;
-    min-height=0;
+    min-width: 0;
+    min-height: 0;
 `;
 
 const Heading = styled.div`
-    min-height: 42px;
+    // min-height: 42px;
 
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
-    font-size: 40px;
+    font-size: ${({fontSize})=>fontSize};
     line-height: 48px;
 
     color: ${({color})=>color};
@@ -49,7 +49,7 @@ const Description = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: ${({fontSize})=>fontSize};
     line-height: 24px;
     display: flex;
     align-items: flex-end;
