@@ -1,9 +1,13 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
-
 const app = express();
 dotenv.config()
+
+import authRoutes from './routes/auth.js'
+import hotelsRoutes from './routes/hotels.js'
+import roomsRoutes from './routes/rooms.js'
+import usersRoutes from './routes/users.js'
 
 
 //MongoDB
@@ -13,13 +17,22 @@ const connect = async () => {
 }
 connect().catch(err => console.log(err));
 mongoose.connection.on("disconnected", ()=>{
-    console.log('MongoDB Disconned');
+    console.log('MongoDB Disconnected');
 })
 mongoose.connection.on("Connect", ()=>{
-    console.log('MongoDB Connecte');
+    console.log('MongoDB Connected');
 })
 
-app.listen(8000, ()=>{
-    connect();
-    console.log("Listening");
+
+//Express Server
+app.use(express.json());
+
+app.listen(5500, ()=>{
+    console.log("Backend Server Started");
 })
+
+app.use('/api/auth', authRoutes);
+app.use('/api/hotels', hotelsRoutes);
+app.use('/api/rooms', roomsRoutes);
+app.use('/api/users', usersRoutes);
+
