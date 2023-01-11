@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
+import cookieParser from 'cookie-parser';
 const app = express();
 dotenv.config()
 
@@ -24,7 +25,9 @@ mongoose.connection.on("Connect", ()=>{
 })
 
 
-//Express Server
+//Middlewares
+app.use(cookieParser());
+
 app.use(express.json());
 
 app.listen(5500, ()=>{
@@ -32,7 +35,16 @@ app.listen(5500, ()=>{
 })
 
 app.use('/api/auth', authRoutes);
-app.use('/api/hotels', hotelsRoutes);
-app.use('/api/rooms', roomsRoutes);
-app.use('/api/users', usersRoutes);
+app.use('/api/hotel', hotelsRoutes);
+app.use('/api/room', roomsRoutes);
+app.use('/api/user', usersRoutes);
 
+app.use((err, req, res, next)=>{    //Special Error Handling Middleware taking in the 4 parameters
+    const errorMessage = err.message || "Something Went Wrong!!!";
+    const errorStatus = err.status || 500;
+    return res.status(errorStatus).json({
+        Success: false,
+        Status: errorStatus,
+        Message: errorMessage
+    })
+})
