@@ -1,14 +1,15 @@
 import styled from 'styled-components'
-export default function Card2({imgSrc, title}){
+export default function Card2({imgSrc, title, count}){
     return (
     <Wrapper>
         <Image src={imgSrc}></Image>
-        <Title>{title}</Title>
+        <Title>{title} <br /> {count} </Title>
     </Wrapper>
     );
 }
 
 const Wrapper = styled.div`
+    position: relative;
     width: 391px;
     height: 392px;
 `

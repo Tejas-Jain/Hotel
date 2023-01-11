@@ -19,6 +19,8 @@ import {format} from 'date-fns'
 //Options Component
 import OptionMenu from '../../Components/OptionMenu'
 
+//useFetch Component
+import useFetch from '../../hooks/useFetch'
 
 export default function Home(){
     return (
@@ -135,12 +137,15 @@ function Body(){
 
 
 function Section1(){
+    const {data, loading, error, reFetch} = useFetch('/hotel/CountHotel?cities=Delhi,Mumbai,Banglore')
+    console.log(error);
+    console.log(data);
     return(
     <>
         <div className="frame13">
-            <Card2 imgSrc='/public/Location Images/Banglore.png' title='Banglore'/>
-            <Card2 imgSrc='/public/Location Images/Jaipur.png' title='Jaipur'/>
-            <Card2 imgSrc='/public/Location Images/New Delhi.png' title='New Delhi'/>
+            <Card2 imgSrc='/public/Location Images/Banglore.png' title='Banglore' count='12'/>
+            <Card2 imgSrc='/public/Location Images/Jaipur.png' title='Jaipur' count='12'/>
+            <Card2 imgSrc='/public/Location Images/New Delhi.png' title='New Delhi' count='12'/>
         </div>
     </>
     )
