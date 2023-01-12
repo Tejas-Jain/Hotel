@@ -137,28 +137,32 @@ function Body(){
 
 
 function Section1(){
-    const {data, loading, error, reFetch} = useFetch('/hotel/CountHotel?cities=Delhi,Mumbai,Banglore')
-    console.log(error);
-    console.log(data);
+    const {data, loading, error, reFetch} = useFetch('/api/hotel/CountHotel?cities=Delhi,Mumbai,Banglore')
+    // console.log(error);
+    // console.log(data);
     return(
     <>
         <div className="frame13">
-            <Card2 imgSrc='/public/Location Images/Banglore.png' title='Banglore' count='12'/>
-            <Card2 imgSrc='/public/Location Images/Jaipur.png' title='Jaipur' count='12'/>
-            <Card2 imgSrc='/public/Location Images/New Delhi.png' title='New Delhi' count='12'/>
+            { loading ? ("Loading .... "): 
+            (<>
+                {data.map((x, i)=>(   
+                    <Card2 key={i} imgSrc = {`/public/Location Images/${x.city}.png`} title ={x.city} count = {x.cityCount} />
+                ))}
+            </>)}
         </div>
     </>
     )
 }
 
 function Section2(){
+    const [data, loading, error, reFetch] = useFetch('/api/CountType?type')
     return (
     <>
         <div className="frame12">
             <HeadingDescript heading='Best Offers' description='These popular destination have lot to offer.'/>
             <div className="frame11">
                 <Card
-                    imgSrc='/Location Images/New Delhi.png'
+                    imgSrc='/Location Images/Delhi.png'
                     title='New Delhi'
                     description='5247 Properties'
                 />
