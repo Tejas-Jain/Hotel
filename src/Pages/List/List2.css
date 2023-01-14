@@ -16,7 +16,7 @@ width: 939px;
 /* Inside auto layout */
 
 /* order: 1; */
-align-self: stretch;
+/* align-self: stretch; */
 }
 
 
@@ -112,7 +112,7 @@ font-weight: 400;
 font-size: 17px;
 line-height: 21px;
 display: flex;
-align-items: center;
+/* align-items: center; */
 
 color: #000000;
 }

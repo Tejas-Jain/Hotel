@@ -107,9 +107,10 @@ function Header(){
 }
 
 export function Navigation(){
+    const navigate = useNavigate();
     return (<>
-        <div className="frame5">
-            Booking.com
+        <div className="frame5" >
+            <a onClick={()=>navigate('/')}  style={{'cursor': 'pointer'}}>Booking.com</a>
             <div className="frame4">
                 <Button content='Sign In' />
                 <Button content='Register' />
