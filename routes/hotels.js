@@ -6,7 +6,8 @@ import {
     getHotel,
     updateHotel,
     deleteHotel,
-    countHotel
+    countHotel,
+    filterHotel
 } from '../controllers/hotels.js';
 
 const router = express.Router();
@@ -15,24 +16,37 @@ import{
     checkAdmin
 } from '../utils/verifyToken.js';
 
-router.use(verifyToken);
+// router.use(verifyToken);
 
 // CREATE
-router.post('/', checkAdmin, createHotel);
+router.post('/', createHotel);
+
+
+
+
+// COUNT BY CITY
+router.get('/CountHotel', countHotel);
+
+//Find By City
+router.get('/Filter', filterHotel)
 
 // READ
-router.get('/find/:id', getHotel);
+router.get('/:id', getHotel);
 
 // READ ALL
 router.get('/', getAllHotels);
 
+
+
+
 // UPDATE
 router.put('/:id', checkAdmin, updateHotel);
+
+
+
 
 // DELETE
 router.delete("/:id", checkAdmin, deleteHotel);
 
-// COUNT BY CITY
-router.get('/CountHotel', countHotel);
 
 export default router;

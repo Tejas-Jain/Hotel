@@ -5,8 +5,12 @@ const { Schema } = mongoose;
 const hotelSchema = new Schema({
     name: {
         type: String,
-        require: true
+        require: true,
+        unique: true
     }, 
+    details: {
+        type: String
+    },
     type: {
         type: String,
         required: true
@@ -17,6 +21,7 @@ const hotelSchema = new Schema({
     },
     address: {
         type: String,
+        unique: true
     },
     photos: [String],
     rating: {

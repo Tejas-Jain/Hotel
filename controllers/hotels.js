@@ -2,7 +2,7 @@ import Hotel from '../models/Hotel.js'
 import createError from '../utils/error.js'
 
 // Create
-export const createHotel = async (req, res) => {
+export const createHotel = async (req, res, next) => {
     const newHotel = new Hotel(req.body);
     try {
         const savedHotel = await newHotel.save();
@@ -68,5 +68,19 @@ export const countHotel = async(req, res, next) => {
          res.status(200).json(list);
     } catch(err) {
         next(err)
+    }
+}
+
+export const filterHotel = async(req, res, next) =>{
+    const city = req.query.city;
+    try{
+        const hotelList = await Hotel.find(
+        {
+            city: city, 
+            cheapestPrice: {$gte: req.query.minPrice, $lte: req.query.maxPrice}
+        }, {name: 1, details: 1, cheapestPrice: 1})
+        res.status(200).json(hotelList);
+    } catch(err) {
+        next(err);
     }
 }
