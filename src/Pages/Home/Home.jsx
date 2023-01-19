@@ -7,9 +7,8 @@ import HeadingDescript from '../../Components/HeadingDescrip'
 import Card2 from '../../Components/Cards/Card2'
 import Card from '../../Components/Cards/Card'
 import './Body.css'
-
+import { useSearch } from '../../contexts/search'
 import { useNavigate } from 'react-router-dom'
-
 //For Date Range
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
@@ -36,9 +35,11 @@ export default function Home(){
 
 function Header(){
 
+    const SearchOptions = useSearch();
+    console.log(SearchOptions);
     const navigate = useNavigate();
 
-    const [destination, setDestionation] = useState('');
+    const [destination, setDestionation] = useState(SearchOptions.city);
 
     const [openDate, setOpenDate] = useState(false);
     const [date, setDate] = useState([

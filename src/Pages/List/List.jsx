@@ -3,7 +3,7 @@ import Button from "../../Components/Button"
 import './List.css'
 import './List2.css'
 import HeaderDescript from "../../Components/HeadingDescrip"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import {format} from 'date-fns'
 import useFetch from "../../hooks/useFetch"
@@ -29,13 +29,14 @@ export default function List(){
                 option = {option}
                 setOption={setOption}
             />
-            <ListItem {...apiData}/>
+            <ListItem {...apiData} />
         </div>
     </div>
 }
 
 
-function ListItem({data, loading, error}){
+function ListItem(props){
+    const {data, loading, error} = props
     // if(err) console.log(error)
     return (<>
         <div className="frame40">
@@ -47,20 +48,21 @@ function ListItem({data, loading, error}){
     </>)
 }
 
-function Frame23({name, details, cheapestPrice, image}){
+function Frame23({_id, name, details, cheapestPrice, image}){
+    const navigate = useNavigate();
     return <div className="frame23">
         <div className="hotelImage"></div>
         <div className="frame39">
             <div className="frame38">
-                <HeaderDescript 
-                    heading={name} 
+                <HeaderDescript
+                    heading={name}
                     description={details}
                 />
                 {details}
             </div>
             <div className="frame37">
                 ${cheapestPrice}
-                <Button content='See Availability' type="dark"/>
+                <Button onClick={()=>navigate(`/hotels/${_id}`)} content='See Availability' type="dark"/>
             </div>
         </div>
     </div>

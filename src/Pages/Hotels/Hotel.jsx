@@ -2,22 +2,29 @@ import HeadingDescript from '../../Components/HeadingDescrip'
 import {Navigation} from '../Home/Home'
 import Button from '../../Components/Button'
 import './Hotel.css'
+import { useLocation } from 'react-router-dom'
+import useFetch from '../../hooks/useFetch'
 
 export default function Hotel(){
+    const location = useLocation();
+    const hotelId = location.pathname.split('/')[2];
+    const {data, loading, reFetch, error} = useFetch(`/api/hotel/${hotelId}`);
+    console.log(data);
     return (
     <div className='Desktop4'>
-
-        
         <div className="frame2">
             <Navigation />
         </div>
-
-
+        {loading ? (
+            <HeadingDescript heading='Loading...' />
+        ) : error ? (
+            <HeadingDescript heading={error} />
+        ) : ( data && 
         <div className="frame46">
             <div className="frame41">
                 <HeadingDescript 
-                    heading='Tower Street Apartment' 
-                    description='These popular destination have a lot to offer.'
+                    heading={data.name} 
+                    description={data.details}
                 />
                 <Button  content='Reserve or Book Now' type='dark' />
             </div>
@@ -40,7 +47,7 @@ export default function Hotel(){
                         headingFontSize='25px'
                         description='These popular destination have a lot to offer In publishing and tytemporarily replace text in a pr'
                         descriptionFontSize='20px'
-                    />
+                        />
                     <div className="frame44">
                         <div className="priceText">$129</div>
                         <div className="durationText">(9 Nights)</div>
@@ -49,8 +56,7 @@ export default function Hotel(){
                 </div>
             </div>
         </div>
-
-
+        )}
     </div>
     );
 
