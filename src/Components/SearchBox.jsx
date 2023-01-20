@@ -1,9 +1,9 @@
 import styled from "styled-components"
 
-export default function SearchBox({onClick, content, onChange}){
+export default function SearchBox({onClick, content, onChange, value}){
     return (
         <Wrapper onClick={onClick}>
-            <InputBox placeholder={content} onChange={onChange}/>
+            <InputBox placeholder={content} onChange={onChange} defaultValue={value} />
         </Wrapper>
     );
 }

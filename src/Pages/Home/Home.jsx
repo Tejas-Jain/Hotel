@@ -7,7 +7,7 @@ import HeadingDescript from '../../Components/HeadingDescrip'
 import Card2 from '../../Components/Cards/Card2'
 import Card from '../../Components/Cards/Card'
 import './Body.css'
-import { useSearch } from '../../contexts/search'
+import { useSearch } from '../../contexts/useSearch'
 import { useNavigate } from 'react-router-dom'
 //For Date Range
 import { DateRange } from 'react-date-range';
@@ -23,7 +23,7 @@ import useFetch from '../../hooks/useFetch'
 
 export default function Home(){
     return (
-    <>  
+    <>
         <Header />
         <Body />
         <Footer />
@@ -32,42 +32,34 @@ export default function Home(){
     )
 }
 
-
 function Header(){
 
-    const SearchOptions = useSearch();
-    console.log(SearchOptions);
+    const  {dispatch, ...saved} = useSearch();
+    // console.log({...rest});
+    
     const navigate = useNavigate();
 
-    const [destination, setDestionation] = useState(SearchOptions.city);
+    const [destination, setDestination] = useState(saved.destination);
 
     const [openDate, setOpenDate] = useState(false);
-    const [date, setDate] = useState([
-        {
-        startDate: new Date(),
-        endDate: new Date(),
-        key: 'selection'
-        }
-    ]);
+    const [dates, setDate] = useState(saved.dates);
 
-    const [openOption, setOpenOption] = useState(false);
-    const [option, setOption] = useState({
-        adult: 1,
-        child: 0,
-        room: 1,
-    })
+    const [openOptions, setOpenOptions] = useState(false);
+    const [options, setOptions] = useState(saved.options);
     
     const handle = (name, operation)=>{
-        setOption(prev=>{ 
+        setOptions(prev=>{ 
             return{
                 ...prev,
-                [name]: operation==='i' ? option[name]+1 : Math.max(option[name]-1, 0),
+                [name]: operation==='i' ? options[name]+1 : Math.max(options[name]-1, 0),
             }
         })
     }
 
     function handleSearch(){
-        navigate('/hotels', { state: {destination, date, option}});
+        dispatch({type: 'NEW_SEARCH', payload: {destination, dates, options}});
+        navigate('/hotels', { state: {destination, dates, options}});
+        // navigate('/');
     }
 
     return (
@@ -82,23 +74,24 @@ function Header(){
             <div className="frame7">
                 <SearchBox 
                     content='Where you are going?' 
-                    onChange={e=>setDestionation(e.target.value)}
+                    value='Delhi'
+                    onChange={e=>setDestination(e.target.value)}
                 />
                 <div >
-                    <SearchBox onClick={()=>setOpenDate(!openDate)} content={format(date[0].startDate, "dd/MM/yyyy")+" to "+format(date[0].endDate, "dd/MM/yyyy")} />
+                    <SearchBox onClick={()=>setOpenDate(!openDate)} content={format(dates[0].startDate, "dd/MM/yyyy")+" to "+format(dates[0].endDate, "dd/MM/yyyy")} />
                     {openDate && <DateRange
                         className='Date'
                         editableDateInputs={true}
                         onChange={item => setDate([item.selection])}
                         moveRangeOnFirstSelection={false}
-                        ranges={date}
+                        ranges={dates}
                     />}
                 </div>
                 <div>
-                    <SearchBox onClick={()=>setOpenOption(!openOption)} content={option.adult+" Adults "+option.child+" Child "+option.room+" Rooms "} />
-                    {openOption && <OptionMenu 
+                    <SearchBox onClick={()=>setOpenOptions(!openOptions)} content={options.adult+" Adults "+options.child+" Child "+options.room+" Rooms "} />
+                    {openOptions && <OptionMenu 
                         handle={handle}
-                        option={option}
+                        options={options}
                     />}
                 </div>
                 <Button content='Search' type='dark' onClick={()=>handleSearch()} />

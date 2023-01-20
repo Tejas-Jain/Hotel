@@ -7,14 +7,14 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import {format} from 'date-fns'
 import useFetch from "../../hooks/useFetch"
+import { useSearch } from "../../contexts/useSearch"
 
 export default function List(){
-
     const location = useLocation();
     const [destination, setDestination] = useState(location.state.destination);
-    const [date, setDate] = useState(location.state.date);
-    const [option, setOption] = useState(location.state.option);
-    const apiData = useFetch(`/api/hotel/Filter?city=${destination}&maxPrice=${option.maxPrice || 999999}&minPrice=${option.minPrice || 0}`)
+    const [dates, setDates] = useState(location.state.dates);
+    const [options, setOptions] = useState(location.state.options);
+    const apiData = useFetch(`/api/hotel/Filter?city=${destination}&maxPrice=${options.maxPrice || 999999}&minPrice=${options.minPrice || 0}`)
 
     return <div className="desktop3">
         <div className="frame2">
@@ -25,9 +25,9 @@ export default function List(){
             <OptionBox
                 onChange={e=>setDestination(e.target.value)}
                 destination={destination}
-                date={date}
-                option = {option}
-                setOption={setOption}
+                dates={dates}
+                options = {options}
+                setOptions={setOptions}
             />
             <ListItem {...apiData} />
         </div>
@@ -71,45 +71,47 @@ function Frame23({_id, name, details, cheapestPrice, image}){
 
 function OptionBox(props){
     var {
-        destination, 
-        date, 
-        option, 
         onChange,
-        setOption
+        setOptions
     } = props;
+    const searchData = useSearch();
 
-    function updateOption(name, value){
-        setOption(prev=>{
+    const options = searchData.options;
+
+    function updateOption(name, value) {
+        setOptions(prev=>{
             return {
                 ...prev,
                 [name]: value
             }
         })
     }
-
+    
     return (<>
         <div className="frame17">
             <div className="searchText">Search</div>
             <Frame36 
                 onChange={onChange}
                 heading='Destination' 
-                placeholder={destination} />
+                placeholder={searchData.destination} />
             <Frame36 
                 onChange={onChange}
                 heading='Check-in'
-                placeholder={format(date[0].startDate, "dd/MM/yyyy")+" to "+format(date[0].endDate, 'dd/MM/yyy')}
+                placeholder={format(searchData.dates[0].startDate, "dd/MM/yyyy")+" to "+format(searchData.dates[0].endDate, 'dd/MM/yyy')}
             />
             <div className="frame33">
                 <div className="optionText">Options</div>
                 <div className="frame32">
-                    <Frame29 label="Min Price" placeholder={option.minPrice} type='number' onChange={e=>updateOption('minPrice', e.target.value)}/>
-                    <Frame29 label="Max Price" placeholder={option.maxPrice} type='number' onChange={e=>updateOption('maxPrice', e.target.value)}/>
-                    <Frame29 label="Adult" placeholder={option.adult} type='number' onChange={e=>updateOption('adult', e.target.value)}/>
-                    <Frame29 label="Children" placeholder={option.child} type='number' onChange={e=>updateOption('child', e.target.value)}/>
-                    <Frame29 label="Room" placeholder={option.room} type='number' onChange={e=>updateOption('room', e.target.value)}/>
+                    <Frame29 label="Min Price" placeholder={options.minPrice} type='number' onChange={e=>updateOption('minPrice', e.target.value)}/>
+                    <Frame29 label="Max Price" placeholder={options.maxPrice} type='number' onChange={e=>updateOption('maxPrice', e.target.value)}/>
+                    <Frame29 label="Adult" placeholder={options.adult} type='number' onChange={e=>updateOption('adult', e.target.value)}/>
+                    <Frame29 label="Children" placeholder={options.child} type='number' onChange={e=>updateOption('child', e.target.value)}/>
+                    <Frame29 label="Room" placeholder={options.room} type='number' onChange={e=>updateOption('room', e.target.value)}/>
                 </div>
             </div>
-            <Button content={"Search"} type='dark' />
+            <Button content={"Search"} type='dark' onClick={()=>searchData.dispatch(
+                { type: "SET_SEARCH", payload: { search: searchData } })
+            }/>
         </div>
     </>)
 }
