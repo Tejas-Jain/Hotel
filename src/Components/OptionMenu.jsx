@@ -1,12 +1,12 @@
 import styled from "styled-components"
 
-export default function OptionMenu({handle, option}){
+export default function OptionMenu({handle, options}){
     return (<Wrapper>
         <Option>
             <Label>Adults</Label>
             <Frame12>
                 <Button onClick={()=>handle('adult', 'i')}><ButtonText>+</ButtonText></Button>
-                <FrameText12>{option.adult}</FrameText12>
+                <FrameText12>{options.adult}</FrameText12>
                 <Button onClick={()=>handle('adult', 'd')}><ButtonText>-</ButtonText></Button>
             </Frame12>
         </Option>
@@ -14,7 +14,7 @@ export default function OptionMenu({handle, option}){
             <Label>Child</Label>
             <Frame12>
                 <Button onClick={()=>handle('child', 'i')}><ButtonText>+</ButtonText></Button>
-                <FrameText12>{option.child}</FrameText12>
+                <FrameText12>{options.child}</FrameText12>
                 <Button onClick={()=>handle('child', 'd')}><ButtonText>-</ButtonText></Button>
             </Frame12>
         </Option>
@@ -22,7 +22,7 @@ export default function OptionMenu({handle, option}){
             <Label>Rooms</Label>
             <Frame12>
                 <Button onClick={()=>handle('room', 'i')}><ButtonText>+</ButtonText></Button>
-                <FrameText12>{option.room}</FrameText12>
+                <FrameText12>{options.room}</FrameText12>
                 <Button onClick={()=>handle('room', 'd')}><ButtonText>-</ButtonText></Button>
             </Frame12>
         </Option>

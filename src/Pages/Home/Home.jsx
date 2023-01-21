@@ -8,7 +8,7 @@ import Card2 from '../../Components/Cards/Card2'
 import Card from '../../Components/Cards/Card'
 import './Body.css'
 import { useSearch } from '../../contexts/useSearch'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 //For Date Range
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
@@ -20,6 +20,9 @@ import OptionMenu from '../../Components/OptionMenu'
 
 //useFetch Component
 import useFetch from '../../hooks/useFetch'
+
+//Contexts
+import {useAuth} from '../../contexts/useAuth'
 
 export default function Home(){
     return (
@@ -33,10 +36,8 @@ export default function Home(){
 }
 
 function Header(){
-
     const  {dispatch, ...saved} = useSearch();
-    // console.log({...rest});
-    
+
     const navigate = useNavigate();
 
     const [destination, setDestination] = useState(saved.destination);
@@ -58,8 +59,8 @@ function Header(){
 
     function handleSearch(){
         dispatch({type: 'NEW_SEARCH', payload: {destination, dates, options}});
-        navigate('/hotels', { state: {destination, dates, options}});
-        // navigate('/');
+        // navigate('/hotels', { state: {destination, dates, options}});
+        navigate('/hotels');  //Passing the search parameters using context instead of navigate object.
     }
 
     return (
@@ -73,8 +74,7 @@ function Header(){
             </div>
             <div className="frame7">
                 <SearchBox 
-                    content='Where you are going?' 
-                    value='Delhi'
+                    content={saved.destination || 'Where you are going?'}
                     onChange={e=>setDestination(e.target.value)}
                 />
                 <div >
@@ -102,13 +102,14 @@ function Header(){
 
 export function Navigation(){
     const navigate = useNavigate();
+    const {user} = useAuth();
     return (<>
         <div className="frame5" >
             <a onClick={()=>navigate('/')}  style={{'cursor': 'pointer'}}>Booking.com</a>
-            <div className="frame4">
+            {user.username || <div className="frame4">
                 <Button content='Sign In' />
                 <Button content='Register' />
-            </div>
+            </div>}
         </div>
 
         <div className="frame6">

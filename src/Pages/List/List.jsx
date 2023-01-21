@@ -10,11 +10,14 @@ import useFetch from "../../hooks/useFetch"
 import { useSearch } from "../../contexts/useSearch"
 
 export default function List(){
-    const location = useLocation();
-    const [destination, setDestination] = useState(location.state.destination);
-    const [dates, setDates] = useState(location.state.dates);
-    const [options, setOptions] = useState(location.state.options);
-    const apiData = useFetch(`/api/hotel/Filter?city=${destination}&maxPrice=${options.maxPrice || 999999}&minPrice=${options.minPrice || 0}`)
+    // const location = useLocation();
+    // const [destination, setDestination] = useState(location.state.destination);
+    // const [dates, setDates] = useState(location.state.dates);
+    // const [options, setOptions] = useState(location.state.options);
+
+    const searchData = useSearch();
+
+    const apiData = useFetch(`/api/hotel/Filter?city=${searchData.destination}&maxPrice=${searchData.options.maxPrice || 999999}&minPrice=${searchData.options.minPrice || 0}`)
 
     return <div className="desktop3">
         <div className="frame2">
@@ -22,13 +25,7 @@ export default function List(){
         </div>
 
         <div className="frame47">
-            <OptionBox
-                onChange={e=>setDestination(e.target.value)}
-                destination={destination}
-                dates={dates}
-                options = {options}
-                setOptions={setOptions}
-            />
+            <OptionBox />
             <ListItem {...apiData} />
         </div>
     </div>
@@ -69,14 +66,11 @@ function Frame23({_id, name, details, cheapestPrice, image}){
 }
 
 
-function OptionBox(props){
-    var {
-        onChange,
-        setOptions
-    } = props;
+function OptionBox(){
+    
     const searchData = useSearch();
 
-    const options = searchData.options;
+    const [options, setOptions] = useState(searchData.options);
 
     function updateOption(name, value) {
         setOptions(prev=>{
@@ -86,16 +80,16 @@ function OptionBox(props){
             }
         })
     }
-    
+
     return (<>
         <div className="frame17">
             <div className="searchText">Search</div>
             <Frame36 
-                onChange={onChange}
+                onChange={(e)=>{searchData.destination=e.target.value}}
                 heading='Destination' 
                 placeholder={searchData.destination} />
             <Frame36 
-                onChange={onChange}
+                onChange={(e)=> searchData.dates=e.target.value }
                 heading='Check-in'
                 placeholder={format(searchData.dates[0].startDate, "dd/MM/yyyy")+" to "+format(searchData.dates[0].endDate, 'dd/MM/yyy')}
             />
@@ -110,7 +104,7 @@ function OptionBox(props){
                 </div>
             </div>
             <Button content={"Search"} type='dark' onClick={()=>searchData.dispatch(
-                { type: "SET_SEARCH", payload: { search: searchData } })
+                { type: "NEW_SEARCH", payload: { destination: searchData.destination, dates: searchData.dates, options: options } })
             }/>
         </div>
     </>)
