@@ -1,4 +1,15 @@
+.wrapper{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: #0000006b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .frame52 {
+  position: fixed;
+  background-color: white;
   box-sizing: border-box;
 
   /* Auto layout */
