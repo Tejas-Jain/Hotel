@@ -2,6 +2,8 @@ import Room from '../models/Room.js'
 import Hotel from '../models/Hotel.js'
 import createError from '../utils/error.js'
 
+
+//CREATE
 export const createRoom = async (req, res, next)=>{
     const hotelId = req.params.hotelId;
     const newRoom = new Room(req.body);
@@ -17,6 +19,7 @@ export const createRoom = async (req, res, next)=>{
     }
 }
 
+//READ
 export const getRoom = async(req, res, next) => {
     try{
         const room = await Room.findById(req.params.id);
@@ -36,6 +39,8 @@ export const getRoomList = async(req, res, next)=>{
     }
 }
 
+
+//UPDATE
 export const updateRoom = async(req, res, next)=>{
     try{
         const updatedRoom = await Room.findByIdAndUpdate(
@@ -49,6 +54,24 @@ export const updateRoom = async(req, res, next)=>{
     }
 }
 
+export const bookRoom = async(req, res, next)=>{
+    try{
+        const updatedRoom = await Room.updateMany(
+            {"roomNumbers._id": req.params.id}, 
+            {
+                $push: {
+                    "roomNumbers.$.unavailableDates": req.body.dates
+                },
+            },
+            {new: true}
+        );
+        res.status(200).json("Room Booked Successfully!!!");
+    } catch(err) {
+        next(err);
+    }
+}
+
+//DELETE
 export const deleteRoom = async(req, res, next) =>{
     const hotelId = req.params.hotelId;
     try{

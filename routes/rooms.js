@@ -6,21 +6,36 @@ import {
     getRoom,
     getRoomList,
     updateRoom,
-    deleteRoom
+    deleteRoom,
+    bookRoom
 } from '../controllers/rooms.js'
 
+//CREATE
 router.post('/:hotelId', createRoom);
 
+
+//READ
 router.get('/:id', getRoom);
 
 router.get('/', getRoomList);
 // router.get('/', log1, log2, log3, getRoomList); //Any number of Middleware will work.
 
-router.put('/:id', updateRoom);
 
+//UPDATE
+router.put('/:id', updateRoom);
+router.put('/book/:id', bookRoom);
+
+
+//DELETE 
 router.delete('/:id/:hotelId', deleteRoom);
 
 
+//Exporting Routes
+export default router;
+
+
+
+//Middleware Experimentation Permission
 function log1(req, res, next){
     console.log("This is First function");
     next();
@@ -33,4 +48,3 @@ function log3(req, res, next){
     console.log("This is Third function");
     next();
 }
-export default router;
