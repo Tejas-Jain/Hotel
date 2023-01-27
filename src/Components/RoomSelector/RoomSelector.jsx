@@ -14,7 +14,7 @@ export default function RoomSelector(props) {
 
   const apiDatas = rooms.map((room) => useFetch(`/api/room/${room}`));
 
-  const selectInputError = undefined;
+  var selectInputError = undefined;
 
   async function handleReserve(e) {
     try {
