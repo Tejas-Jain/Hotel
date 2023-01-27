@@ -41,7 +41,7 @@ export default function Login(){
     return <>
         <input type="text" placeholder="username" id="username" onChange={handleChange}/>
         <input type="password" placeholder="password" id="password" onChange={handleChange}/>
-        <button disable={loading} onClick={handleClick}>Submit</button>
+        <button disabled={loading} onClick={handleClick}>Submit</button>
         {error && <span>{error}</span>}
     </>
 }

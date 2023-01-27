@@ -106,8 +106,8 @@ export function Navigation(){
     return (<>
         <div className="frame5" >
             <a onClick={()=>navigate('/')}  style={{'cursor': 'pointer'}}>Booking.com</a>
-            {user.username || <div className="frame4">
-                <Button content='Sign In' />
+            {user && user.username || <div className="frame4">
+                <Button onClick={()=>navigate('/user/login')} content='Sign In' />
                 <Button content='Register' />
             </div>}
         </div>
