@@ -37,7 +37,7 @@ app.use(cookieParser());
 
 app.use(express.json());
 
-app.listen(5500, ()=>{
+app.listen(process.env.PORT || 5500, ()=>{
     console.log("Backend Server Started");
 })
 
