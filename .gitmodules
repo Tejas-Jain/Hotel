@@ -1,0 +1,8 @@
+[submodule "frontend"]
+	path = frontend
+	url = git@github.com:Tejas-Jain/Hotel.git
+	branch = frontend
+[submodule "backend"]
+	path = backend
+	url = git@github.com:Tejas-Jain/Hotel.git
+	branch = backend
